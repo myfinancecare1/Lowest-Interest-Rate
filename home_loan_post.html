@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lowest Interest Home Loan - Poster & Calculator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f9ff; /* Light blue background */
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Poster Specific Styles */
+        .poster-container {
+            background: linear-gradient(135deg, #4a00e0 0%, #8e2de2 100%); /* Deep purple to lighter purple gradient */
+            border-radius: 25px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            color: white;
+            padding: 50px 30px; /* Generous padding */
+            max-width: 650px; /* Max width for larger screens */
+            width: 100%; /* Full width on smaller screens */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 25px; /* Space between sections */
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px; /* Space between poster and app */
+        }
+        .poster-container::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            filter: blur(40px);
+        }
+        .poster-container::after {
+            content: '';
+            position: absolute;
+            bottom: -70px;
+            right: -70px;
+            width: 180px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            filter: blur(50px);
+        }
+        .poster-headline {
+            font-size: 3.5rem; /* Large, impactful headline */
+            font-weight: 800;
+            line-height: 1.1;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+            margin-bottom: 10px;
+        }
+        .poster-subheadline {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            opacity: 0.95;
+        }
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            text-align: left;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .benefits-list li {
+            font-size: 1.2rem;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.9;
+        }
+        .benefits-list li svg {
+            color: #00f2fe; /* Bright accent color for checkmarks */
+            min-width: 24px; /* Ensure icon size */
+            min-height: 24px;
+        }
+        .poster-cta-button {
+            background-color: #00f2fe; /* Vibrant call to action */
+            color: #1a202c; /* Dark text for contrast */
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 35px;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 8px 15px rgba(0, 242, 254, 0.4);
+        }
+        .poster-cta-button:hover {
+            transform: translateY(-5px) scale(1.02);
+            background-color: #4df7ff;
+            box-shadow: 0 12px 20px rgba(0, 242, 254, 0.6);
+        }
+        .contact-info {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 25px;
+        }
+
+        /* React App Container Styles (similar to original app styling) */
+        #react-app-root {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 650px; /* Match poster width for consistency */
+            width: 100%;
+            transform: transition-all duration-300;
+            margin-top: 20px; /* Space from poster */
+        }
+        #react-app-root:hover {
+            transform: scale(1.02);
+        }
+
+        /* Responsive adjustments for Poster */
+        @media (max-width: 768px) {
+            .poster-headline {
+                font-size: 2.8rem;
+            }
+            .poster-subheadline {
+                font-size: 1.5rem;
+            }
+            .benefits-list li {
+                font-size: 1.1rem;
+            }
+            .poster-cta-button {
+                font-size: 1.4rem;
+                padding: 15px 30px;
+            }
+            .poster-container {
+                padding: 40px 25px;
+            }
+            #react-app-root {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .poster-headline {
+                font-size: 2.2rem;
+            }
+            .poster-subheadline {
+                font-size: 1.2rem;
+            }
+            .benefits-list li {
+                font-size: 1rem;
+            }
+            .poster-cta-button {
+                font-size: 1.2rem;
+                padding: 12px 25px;
+            }
+            .poster-container {
+                padding: 30px 20px;
+            }
+            body {
+                padding: 10px;
+            }
+            #react-app-root {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Poster Section -->
+    <div class="poster-container">
+        <h1 class="poster-headline">
+            Unlock Your Dream Home & Save More!
+        </h1>
+        <p class="poster-subheadline">
+            Lowest Interest Home Loans Available Now
+        </p>
+
+        <ul class="benefits-list">
+            <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                    <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+                </svg>
+                <span>Competitive Interest Rates</span>
+            </li>
+            <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                    <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+                </svg>
+                <span>Reduce Your Monthly Payments</span>
+            </li>
+            <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                    <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+                </svg>
+                <span>Simple & Fast Application Process</span>
+            </li>
+            <li>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                    <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+                </svg>
+                <span>Expert Guidance Every Step of the Way</span>
+            </li>
+        </ul>
+
+        <a href="https://wa.me/917503782090" target="_blank" class="poster-cta-button">
+            Chat with Expert
+        </a>
+
+        <p class="contact-info">
+            Visit our website: <a href="https://myfinancecare.in" target="_blank" class="underline hover:text-blue-200">Myfinancecare.in</a> | Call us: <a href="tel:+917503782090" class="underline hover:text-blue-200">+91 75037 82090</a>
+        </p>
+    </div>
+
+    <!-- React Application Section -->
+    <div id="react-app-root" class="flex flex-col items-center justify-center p-4">
+        <!-- React app will be mounted here -->
+    </div>
+
+    <!-- React and ReactDOM CDNs -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX transformation in browser (for development/demo purposes) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        // React App component
+        const App = () => {
+          // State variables for form inputs
+          const [loanAmount, setLoanAmount] = React.useState('');
+          const [desiredRate, setDesiredRate] = React.useState('');
+          const [loanTerm, setLoanTerm] = React.useState(''); // In years
+
+          // State variables for calculation results
+          const [monthlyPayment, setMonthlyPayment] = React.useState(null);
+          const [message, setMessage] = React.useState('');
+
+          // Function to calculate estimated monthly payment (simplified for demo)
+          const calculateMonthlyPayment = (principal, annualRate, years) => {
+            if (principal <= 0 || annualRate < 0 || years <= 0) {
+              return 0;
+            }
+            const monthlyRate = (annualRate / 100) / 12;
+            const numberOfPayments = years * 12;
+
+            if (monthlyRate === 0) { // Handle zero interest rate
+              return principal / numberOfPayments;
+            }
+
+            // M = P [ i(1 + i)^n ] / [ (1 + i)^n – 1]
+            const numerator = principal * monthlyRate * Math.pow((1 + monthlyRate), numberOfPayments);
+            const denominator = Math.pow((1 + monthlyRate), numberOfPayments) - 1;
+            return numerator / denominator;
+          };
+
+          // Handle form submission
+          const handleSubmit = (e) => {
+            e.preventDefault();
+            setMessage('');
+            setMonthlyPayment(null);
+
+            const principal = parseFloat(loanAmount);
+            const newRate = parseFloat(desiredRate);
+            const termYears = parseFloat(loanTerm);
+
+            if (isNaN(principal) || isNaN(newRate) || isNaN(termYears) || principal <= 0 || newRate < 0 || termYears <= 0) {
+              setMessage('Please enter valid positive numbers for all fields.');
+              return;
+            }
+
+            const newMonthlyPayment = calculateMonthlyPayment(principal, newRate, termYears);
+            setMonthlyPayment(newMonthlyPayment.toFixed(2));
+            setMessage('Your estimated monthly payment is calculated.');
+          };
+
+          // Reset form fields and results
+          const handleReset = () => {
+            setLoanAmount('');
+            setDesiredRate('');
+            setLoanTerm('');
+            setMonthlyPayment(null);
+            setMessage('');
+          };
+
+          return (
+            <div className="w-full"> {/* Added w-full to make it responsive within its container */}
+              <h1 className="text-4xl font-extrabold text-gray-800 mb-6 font-inter">
+                Home Loan Payment Calculator
+              </h1>
+              <p className="text-gray-600 text-lg mb-8">
+                  Estimate your monthly payments for your dream home.
+              </p>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Loan Amount Input */}
+                <div>
+                  <label htmlFor="loanAmount" className="block text-left text-gray-700 text-sm font-medium mb-2">
+                    Loan Amount (₹)
+                  </label>
+                  <input
+                    type="number"
+                    id="loanAmount"
+                    value={loanAmount}
+                    onChange={(e) => setLoanAmount(e.target.value)}
+                    placeholder="e.g., 2500000"
+                    className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                    required
+                    min="0"
+                  />
+                </div>
+
+                {/* Desired Interest Rate Input */}
+                <div>
+                  <label htmlFor="desiredRate" className="block text-left text-gray-700 text-sm font-medium mb-2">
+                    Annual Interest Rate (%)
+                  </label>
+                  <input
+                    type="number"
+                    id="desiredRate"
+                    value={desiredRate}
+                    onChange={(e) => setDesiredRate(e.target.value)}
+                    placeholder="e.g., 8.5"
+                    step="0.01"
+                    className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                    required
+                    min="0"
+                  />
+                </div>
+
+                {/* Loan Term Input */}
+                <div>
+                  <label htmlFor="loanTerm" className="block text-left text-gray-700 text-sm font-medium mb-2">
+                    Loan Term (Years)
+                  </label>
+                  <input
+                    type="number"
+                    id="loanTerm"
+                    value={loanTerm}
+                    onChange={(e) => setLoanTerm(e.target.value)}
+                    placeholder="e.g., 30"
+                    className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                    required
+                    min="1"
+                  />
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex justify-center space-x-4 mt-6">
+                  <button
+                    type="submit"
+                    className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-xl transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-green-300"
+                  >
+                    Calculate
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-xl transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-gray-300"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+
+              {/* Results Display */}
+              {monthlyPayment !== null && (
+                <div className="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-xl shadow-inner">
+                  <h2 className="text-2xl font-semibold text-blue-800 mb-4">Your Estimated Monthly Payment:</h2>
+                  <p className="text-4xl font-bold text-blue-700 mb-2">
+                    ₹{monthlyPayment}
+                  </p>
+                  {message && (
+                      <p className="mt-4 text-md font-medium text-gray-600">{message}</p>
+                  )}
+                </div>
+              )}
+
+              {/* Error/Info Message */}
+              {message && monthlyPayment === null && (
+                  <p className="mt-6 text-red-600 font-medium">{message}</p>
+              )}
+
+              <p className="text-gray-600 text-sm mt-8">
+                Disclaimer: This is a simplified calculator for estimation purposes only. Actual rates and payments may vary.
+              </p>
+            </div>
+          );
+        };
+
+        // Render the React App component into the 'react-app-root' div
+        const container = document.getElementById('react-app-root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+    </script>
+</body>
+</html>
